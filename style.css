@@ -2,7 +2,7 @@
     padding: 0;
 }
 img{
-    border-radius: 20px;
+    border-radius: 10px;
 }
 .container{
     display: flex;
@@ -14,19 +14,25 @@ img{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 500px;
+    width: 30%;
 }
 .box{
-    width: 180%;
+    width: 100%;
     background: #4060dd;
     border-radius: 30px;
     margin: 5px 0px;
     font-size: 20px;
-    line-height: 50%;
+    line-height: 120%;
     color: aliceblue;
     display: flex;
     flex-wrap: wrap;
+    transition: all 0.2s ease;
 }
+.user-list .box:hover{
+    background: #5875e7;
+    transform: scale(1.1);
+}
+
 
 .user{
     cursor: pointer;
@@ -43,7 +49,7 @@ img{
    justify-content: space-between;
 }
 .bigPhoto{
-    width: 178%;
+    width: 100%;
 }
 .profile{
     display: flex;
@@ -70,7 +76,7 @@ img{
 .pagination{
     margin: 15px 0px 15px 0px;
     font-size: 20px;
-    width: 50%;
+    width: 27%;
     display: flex;
     justify-content: space-between;
 }
@@ -84,7 +90,7 @@ img{
     cursor: pointer;
 }
 .numPage:hover{
-    color: blue;
+    border-bottom: 1px solid blue;
 }
 .arrow{
     width: 13px;

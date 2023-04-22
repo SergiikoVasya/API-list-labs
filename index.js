@@ -30,7 +30,7 @@ function createList(users, page){
     div.textContent = user.user.username
 
     const profileImg = document.createElement('img')
-    profileImg.src = user.user.profile_image.medium
+    profileImg.src = user.user.profile_image.small
 
     div.appendChild(profileImg)
     usersdiv.appendChild(div)
@@ -49,7 +49,7 @@ const showPhoto = (mainDiv, users, chosenUser) => {
     paginationDiv.classList.add('hide')
     head.classList.add('header_content_changed')
     
-    profileImg.src = chosenUser.user.profile_image.medium
+    profileImg.src = chosenUser.user.profile_image.small
     
     head.textContent = ""
      
@@ -93,12 +93,10 @@ function pagination(page){
   divArrowRight.classList.add('arrow', 'arrow-right')
   const divArrowLeft = document.createElement('div')
   divArrowLeft.classList.add('arrow', 'arrow-left')
-  if(page != 1){
-    divArrowLeft.addEventListener('click',()=> main(page-1))
-  }
-  if(page != 10){
-    divArrowRight.addEventListener('click',()=> main(page+1))
-  }
+
+  page === 1 ? divArrowLeft.addEventListener('click',()=> main(10)) : divArrowLeft.addEventListener('click',()=> main(page-1))
+  page === 10 ? divArrowRight.addEventListener('click',()=> main(1)) : divArrowRight.addEventListener('click',()=> main(page+1))
+
   paginationDiv.appendChild(divArrowLeft)
 
   pagesNum.forEach((item) => {
