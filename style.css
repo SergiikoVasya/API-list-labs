@@ -108,6 +108,25 @@ img{
 .arrow-right:hover,.arrow-left:hover{
     border-color: blue;
 }
+
+.heart{
+    cursor: pointer;
+    width: 10%;
+    height: 10%;
+}
+.heart-red{
+    background: red;
+}
+.likes{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: 50px;
+}
+.likes > *{
+    margin: 10px 10px 0px 0px;
+}
+
 @media (max-width: 879px){
     .box{
         font-size: 35px;

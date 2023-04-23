@@ -20,8 +20,6 @@ async function main(page) {
   }
 
 function createList(users, page){
-  
-  
   users.forEach(user => {
     const div = document.createElement('div')
     
@@ -35,45 +33,86 @@ function createList(users, page){
     div.appendChild(profileImg)
     usersdiv.appendChild(div)
 
-    div.addEventListener('click', () => showPhoto(mainDiv, users, user))
+    div.addEventListener('click', () => showPhoto(users, user))
 });
   pagination(page)
 }
 
-const showPhoto = (mainDiv, users, chosenUser) => {
-    const profileImg = document.createElement('img')
+const showPhoto = (users, chosenPost) => {
+    const profileImg = document.createElement('img') 
     const photo = document.createElement('img')
     const arrow = document.createElement('div')
     const profileDiv = document.createElement('div')
     const head = document.getElementById('head')
+
+    const likesDiv = addLikes(chosenPost)
+    
     paginationDiv.classList.add('hide')
     head.classList.add('header_content_changed')
     
-    profileImg.src = chosenUser.user.profile_image.small
+    profileImg.src = chosenPost.user.profile_image.small
     
     head.textContent = ""
      
     profileDiv.classList.add('profile')
-    profileDiv.textContent = chosenUser.user.username;
+    profileDiv.textContent = chosenPost.user.username;
     profileDiv.appendChild(profileImg)
     
     head.appendChild(arrow)
     head.appendChild(profileDiv)
     contentDiv.appendChild(photo)
+    contentDiv.appendChild(likesDiv)
+
 
     users.forEach(item => {
         const div = document.getElementById(item.id)
         div.classList.toggle('hide')
     })
 
-    photo.src = chosenUser.urls.regular
+    photo.src = chosenPost.urls.regular
     photo.classList.add('bigPhoto')
 
-    arrow.addEventListener('click', () => reset(users, photo, mainDiv, head))
+    arrow.addEventListener('click', () => reset(users, photo, head, likes))
     arrow.classList.add("arrow", 'arrow-left')
   }
 
-const reset = (users, photo, mainDiv, head) =>{
+const addLikes = (chosenPost) => {
+  const heart = document.createElement('img')
+  heart.src = "img/heart.svg";
+  heart.alt = "heart"
+  heart.classList.add('heart')
+  if(chosenPost.liked_by_user){
+    heart.classList.add('heart-red')
+  }
+  const likes = document.createElement('div')
+  likes.classList.add('likes')
+  likes.textContent = chosenPost.likes
+  likes.id = 'likes'
+  likes.appendChild(heart)
+
+  likes.addEventListener('click', () => pressLike(heart, chosenPost, likes))
+
+  return likes
+}
+
+const pressLike = (heart, chosenPost, likeDiv) => {
+  if(heart.classList.contains('heart-red')){
+    heart.classList.remove('heart-red')
+    chosenPost.liked_by_user = false
+    chosenPost.likes--
+    likeDiv.textContent = chosenPost.likes
+    likeDiv.appendChild(heart)
+  }
+  else {
+    heart.classList.add('heart-red')
+    chosenPost.liked_by_user = true
+    chosenPost.likes++
+    likeDiv.textContent = chosenPost.likes
+    likeDiv.appendChild(heart)
+  }
+}
+
+const reset = (users, photo, head, likes) =>{
     users.forEach(item => {
       const div = document.getElementById(item.id)
       div.classList.remove('hide')
@@ -83,6 +122,7 @@ const reset = (users, photo, mainDiv, head) =>{
     head.innerHTML = ''
     head.textContent = 'List users:'
     head.classList.remove('header_content_changed')
+    contentDiv.removeChild(likes)
   }
   
 function pagination(page){
