@@ -50,6 +50,9 @@ img{
 }
 .bigPhoto{
     width: 100%;
+    object-fit:cover;
+    height: 600px;
+    object-position: center;
 }
 .profile{
     display: flex;
@@ -115,10 +118,10 @@ img{
     height: 15%;
 }
 .heart-red{
-    background: red;
 }
 .likes{
     display: flex;
+    width: 100%;
     flex-direction: row-reverse;
     justify-content: flex-end;
     font-size: 50px;

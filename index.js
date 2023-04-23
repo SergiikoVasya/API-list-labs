@@ -35,6 +35,7 @@ function createList(posts, page){
 
     div.addEventListener('click', () => showPhoto(posts, user))
 });
+
   pagination(page)
 }
 
@@ -78,11 +79,12 @@ const showPhoto = (users, chosenPost) => {
 
 const addLikes = (chosenPost) => {
   const heart = document.createElement('img')
-  heart.src = "img/heart.svg";
+  heart.src = "img/heart.png";
   heart.alt = "heart"
   heart.classList.add('heart')
   if(chosenPost.liked_by_user){
     heart.classList.add('heart-red')
+    heart.src = "img/heart-red.png";
   }
   const likes = document.createElement('div')
   likes.classList.add('likes')
@@ -98,6 +100,7 @@ const addLikes = (chosenPost) => {
 const pressLike = (heart, chosenPost, likeDiv) => {
   if(heart.classList.contains('heart-red')){
     heart.classList.remove('heart-red')
+    heart.src = "img/heart.png";
     chosenPost.liked_by_user = false
     chosenPost.likes--
     likeDiv.textContent = chosenPost.likes
@@ -105,6 +108,7 @@ const pressLike = (heart, chosenPost, likeDiv) => {
   }
   else {
     heart.classList.add('heart-red')
+    heart.src = "img/heart-red.png";
     chosenPost.liked_by_user = true
     chosenPost.likes++
     likeDiv.textContent = chosenPost.likes
