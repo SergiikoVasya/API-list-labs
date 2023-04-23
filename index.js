@@ -1,8 +1,8 @@
 async function fetchQ(countPage) {
-    const users = await fetch(
+    const posts = await fetch(
       `https://api.unsplash.com/photos/?client_id=ab3411e4ac868c2646c0ed488dfd919ef612b04c264f3374c97fff98ed253dc9&page=${countPage === undefined ? 1 : countPage}`
       )
-      const json = await users.json()
+      const json = await posts.json()
       return json
     }
     
@@ -19,8 +19,8 @@ async function main(page) {
     createList(gUsers, page)
   }
 
-function createList(users, page){
-  users.forEach(user => {
+function createList(posts, page){
+  posts.forEach(user => {
     const div = document.createElement('div')
     
     div.classList.add('box', 'user', 'list')
@@ -33,7 +33,7 @@ function createList(users, page){
     div.appendChild(profileImg)
     usersdiv.appendChild(div)
 
-    div.addEventListener('click', () => showPhoto(users, user))
+    div.addEventListener('click', () => showPhoto(posts, user))
 });
   pagination(page)
 }
