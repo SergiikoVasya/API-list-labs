@@ -1,10 +1,15 @@
 *{
     padding: 0;
+    margin: 0;
+}
+html,body{
+    height: 100%;
 }
 img{
     border-radius: 10px;
 }
 .container{
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,6 +20,7 @@ img{
     flex-direction: column;
     align-items: center;
     width: 30%;
+    position: relative;
 }
 .box{
     width: 100%;
@@ -31,9 +37,8 @@ img{
 .user-list .box:hover{
     background: #5875e7;
     transform: scale(1.1);
+    box-shadow: rgba(1, 0, 0, 0.56) 0px 22px 70px 4px;
 }
-
-
 .user{
     cursor: pointer;
 }
@@ -51,8 +56,9 @@ img{
 .bigPhoto{
     width: 100%;
     object-fit:cover;
-    height: 600px;
+    height: 700px;
     object-position: center;
+    cursor: pointer;
 }
 .profile{
     display: flex;
@@ -112,24 +118,6 @@ img{
     border-color: blue;
 }
 
-.heart{
-    cursor: pointer;
-    width: 8%;
-    height: 15%;
-}
-.heart-red{
-}
-.likes{
-    display: flex;
-    width: 100%;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    font-size: 50px;
-    line-height: 120%;
-}
-.likes > *{
-    margin: 10px 10px 0px 0px;
-}
 
 @media (max-width: 879px){
     .box{

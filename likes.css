@@ -1,0 +1,86 @@
+.heart {
+    width: 30px; 
+    height: 30px; 
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    transform: rotate(45deg);
+    cursor: pointer; 
+}
+.heart::before,
+.heart::after {
+    content : '';
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+}
+.heart::before {
+    top: -15px;
+    left: 0;
+}
+.heart::after {
+    top: 0;
+    left: -15px;
+}
+.heart:hover, .heart:hover::before,
+.heart:hover::after{
+    background: rgb(224, 92, 92);
+}
+.heart-red, .heart-red::before, .heart-red::after{
+    background: rgb(194, 7, 7);
+}
+.heart-white, .heart-white::before, .heart-white::after{
+    background: rgb(255, 255, 255);
+}
+.heart_for_anim{
+    position: absolute;   
+    opacity: 0;
+    width: 80px;
+    height: 80px;
+    animation-name: heartAnimation;
+    animation-duration: 1s;
+    top: 40%;
+    z-index: -1;
+}
+.heart_for_anim::before,
+.heart_for_anim::after {
+    width: 80px;
+    height: 80px;
+}
+.heart_for_anim::before {
+    top: -40px;
+    left: 0;
+}
+.heart_for_anim::after {
+    top: 0;
+    left: -40px;
+}
+@keyframes heartAnimation{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 0.8;
+        z-index: 20;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+.likes{
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    position: relative;
+    padding: 0px 0px 0px 25px;
+    font-size: 50px;
+    line-height: 120%;
+    align-items: center;
+}
+.likes > *{
+    margin: 10px 15px 0px 0px;
+}

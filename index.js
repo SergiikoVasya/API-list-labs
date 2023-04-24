@@ -10,8 +10,8 @@ const mainDiv = document.getElementById('app')
 const contentDiv = document.getElementById('content')
 const paginationDiv = document.getElementById('pagination')
 const usersdiv = document.createElement('div')
-usersdiv.classList.add('user-list')
-contentDiv.appendChild(usersdiv)
+const headDiv = document.createElement('div')
+let heartShowOnPhoto = document.getElementById('heart-anim')
     
 async function main(page) {
     const gUsers = await fetchQ(page)
@@ -35,7 +35,11 @@ function createList(posts, page){
 
     div.addEventListener('click', () => showPhoto(posts, user))
 });
-
+  headDiv.classList.add('header_content', 'box')
+  headDiv.textContent = 'List users :)'
+  usersdiv.classList.add('user-list')
+  contentDiv.appendChild(headDiv)
+  contentDiv.appendChild(usersdiv)
   pagination(page)
 }
 
@@ -44,23 +48,27 @@ const showPhoto = (users, chosenPost) => {
     const photo = document.createElement('img')
     const arrow = document.createElement('div')
     const profileDiv = document.createElement('div')
-    const head = document.getElementById('head')
 
-    const likesDiv = addLikes(chosenPost)
+    mainDiv.style.background = chosenPost.color
+
+    photo.src = chosenPost.urls.regular
+    photo.classList.add('bigPhoto')
+
+    const likesDiv = addLikes(chosenPost, photo)
     
     paginationDiv.classList.add('hide')
-    head.classList.add('header_content_changed')
+    headDiv.classList.add('header_content_changed')
     
     profileImg.src = chosenPost.user.profile_image.small
     
-    head.textContent = ""
+    headDiv.textContent = ""
      
     profileDiv.classList.add('profile')
     profileDiv.textContent = chosenPost.user.username;
     profileDiv.appendChild(profileImg)
     
-    head.appendChild(arrow)
-    head.appendChild(profileDiv)
+    headDiv.appendChild(arrow)
+    headDiv.appendChild(profileDiv)
     contentDiv.appendChild(photo)
     contentDiv.appendChild(likesDiv)
 
@@ -70,21 +78,16 @@ const showPhoto = (users, chosenPost) => {
         div.classList.toggle('hide')
     })
 
-    photo.src = chosenPost.urls.regular
-    photo.classList.add('bigPhoto')
-
-    arrow.addEventListener('click', () => reset(users, photo, head, likes))
+    arrow.addEventListener('click', () => reset(users, photo, likes))
     arrow.classList.add("arrow", 'arrow-left')
   }
 
-const addLikes = (chosenPost) => {
-  const heart = document.createElement('img')
-  heart.src = "img/heart.png";
-  heart.alt = "heart"
+const addLikes = (chosenPost, photo) => {
+
+  const heart = document.createElement('div')
   heart.classList.add('heart')
   if(chosenPost.liked_by_user){
     heart.classList.add('heart-red')
-    heart.src = "img/heart-red.png";
   }
   const likes = document.createElement('div')
   likes.classList.add('likes')
@@ -92,23 +95,32 @@ const addLikes = (chosenPost) => {
   likes.id = 'likes'
   likes.appendChild(heart)
 
+  photo.addEventListener('dblclick', () => pressLike(heart, chosenPost, likes))
   likes.addEventListener('click', () => pressLike(heart, chosenPost, likes))
 
   return likes
 }
 
 const pressLike = (heart, chosenPost, likeDiv) => {
+  if (heartShowOnPhoto != undefined){
+    contentDiv.removeChild(heartShowOnPhoto)
+  }
+
+  heartShowOnPhoto = document.createElement('div')
+  heartShowOnPhoto.id = 'heart-anim'
   if(heart.classList.contains('heart-red')){
     heart.classList.remove('heart-red')
-    heart.src = "img/heart.png";
+    heartShowOnPhoto.classList.add('heart', 'heart-white', 'heart_for_anim')
+    contentDiv.appendChild(heartShowOnPhoto)
     chosenPost.liked_by_user = false
     chosenPost.likes--
     likeDiv.textContent = chosenPost.likes
     likeDiv.appendChild(heart)
   }
   else {
+    heartShowOnPhoto.classList.add('heart', 'heart-red', 'heart_for_anim')
+    contentDiv.appendChild(heartShowOnPhoto)
     heart.classList.add('heart-red')
-    heart.src = "img/heart-red.png";
     chosenPost.liked_by_user = true
     chosenPost.likes++
     likeDiv.textContent = chosenPost.likes
@@ -116,17 +128,21 @@ const pressLike = (heart, chosenPost, likeDiv) => {
   }
 }
 
-const reset = (users, photo, head, likes) =>{
+const reset = (users, photo, likes) =>{
     users.forEach(item => {
       const div = document.getElementById(item.id)
       div.classList.remove('hide')
   })
     paginationDiv.classList.remove('hide')
     photo.remove()
-    head.innerHTML = ''
-    head.textContent = 'List users:'
-    head.classList.remove('header_content_changed')
+    mainDiv.style.background = ''
+    headDiv.innerHTML = ''
+    headDiv.textContent = 'List users:'
+    headDiv.classList.remove('header_content_changed')
+
     contentDiv.removeChild(likes)
+    contentDiv.removeChild(heartShowOnPhoto)
+    heartShowOnPhoto = undefined
   }
   
 function pagination(page){
@@ -160,6 +176,7 @@ function pagination(page){
 
 function clearAll(){
   paginationDiv.innerHTML = ''
+  contentDiv.innerHTML = ''
   usersdiv.innerHTML = ''
 }
 
